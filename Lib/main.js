@@ -89,7 +89,7 @@ var map = L.map('map', {zoomControl:false, attributionControl: false } ).setView
         
         //Marker Icons
         
-        $.getJSON("lib/bordercrossing.geojson",function(data){
+        $.getJSON("Lib/bordercrossing.geojson",function(data){
             var borderIcon = L.icon({
                 iconUrl: 'images/border.png',
                 iconSize: [20,50],
@@ -104,7 +104,7 @@ var map = L.map('map', {zoomControl:false, attributionControl: false } ).setView
                 }).addTo(map);
             });
         
-        $.getJSON("lib/asam.geojson",function(data){
+        $.getJSON("Lib/asam.geojson",function(data){
             var asamIcon = L.icon({
                 iconUrl: 'images/asam.png',
                 iconSize: [20,50],
@@ -119,7 +119,7 @@ var map = L.map('map', {zoomControl:false, attributionControl: false } ).setView
                 }).addTo(map);
             });
         
-        $.getJSON("lib/asammsc.geojson",function(data){
+        $.getJSON("Lib/asammsc.geojson",function(data){
             var asammscIcon = L.icon({
                 iconUrl: 'images/asamimc.png',
                 iconSize: [20,50],
@@ -134,7 +134,7 @@ var map = L.map('map', {zoomControl:false, attributionControl: false } ).setView
                 }).addTo(map);
             });
         
-        $.getJSON("lib/hrdf.geojson",function(data){
+        $.getJSON("Lib/hrdf.geojson",function(data){
             var hrdfIcon = L.icon({
                 iconUrl: 'images/hrdf.png',
                 iconSize: [20,50],

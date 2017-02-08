@@ -1,0 +1,173 @@
+//Choropleth Label
+
+var legend = L.control({position: 'bottomright'});
+
+		legend.onAdd = function (map) {
+
+			var div = L.DomUtil.create('div', 'info legend'),
+				grades = [1, 1500, 3000, 4500, 6000, 7500, 9000, 10500, 12000],
+				labels = [],
+				from, to;
+
+			for (var i = 0; i < grades.length; i++) {
+				from = grades[i];
+				to = grades[i + 1];
+
+				labels.push(
+					'<i style="background:' + getColor(from + 1) + '"></i> ' +
+					from + (to ? '&ndash;' + to : '+'));
+			}
+
+			div.innerHTML = labels.join('<br>');
+			return div;
+		};
+
+		legend.addTo(map);
+
+
+var legend = L.control({position: 'bottomleft'});
+
+		legend.onAdd = function (map) {
+
+			var div = L.DomUtil.create('div', 'info legend'),
+				grades = [],
+				labels = ["Official border crossing point","b","c","d","e","f","g","h","i"],
+				from, to;
+
+			div.innerHTML = labels.join('<br>');
+			return div;
+		};
+
+
+
+        // load GeoJSON from an external file
+        $.getJSON("lib/institutions.geojson",function(data){
+            L.geoJson(data, {
+                style: function(feature) {
+                    return {markerColor: 'red',
+                           };
+                },
+                onEachFeature: function(feature, layer) {
+                    layer.bindPopup(feature.properties.title);
+                }
+            }).addTo(map);
+        });   
+
+          $.getJSON("lib/institutions.geojson",function(data){
+            L.geoJson(data, {
+                style: function(feature) {
+                     return L.marker({
+                         icon: L.icon({
+                             iconUrl: 'css/images/' + feature.properties.markersymbol + '.png',
+                             iconSize: [27, 27]
+                           })
+                        })
+                    },
+                onEachFeature: function(feature, layer) {
+                    layer.bindPopup(feature.properties.title);
+                }
+            }).addTo(map);
+        });   
+
+
+
+
+var bordercrossing = [
+		["Aziziye Border Crossing",41.967207,27.457809],
+		["Hamzabeyli Border Crossing",41.957922,26.61122],
+		["Kapikule Border Crossing",41.718255,26.34899],
+		["Karaagac Border Crossing",41.654486,26.4912],
+		["Uzunkopru Border Crossing",41.362326,26.632023],
+		["Ipsala Border Crossing", 40.93326,26.330372]
+		];
+        
+for (var i = 0; i < bordercrossing.length; i++) {
+			marker = new L.marker([bordercrossing[i][1],bordercrossing[i][2]])
+				.bindPopup(bordercrossing[i][0])
+				.addTo(map);
+		}             
+
+        
+//Marker Icons
+        
+        $.getJSON("lib/bordercrossing.geojson",function(data){
+            var borderIcon = L.icon({
+                iconUrl: 'images/border.png',
+                iconSize: [20,50],
+                popupAnchor:  [0, -30],
+                });
+            L.geoJson(data,{
+                pointToLayer: function(feature,latlng){
+                    var marker = L.marker(latlng,{icon: borderIcon});
+                    marker.bindPopup(feature.properties.title);
+                    return marker;
+                    }
+                }).addTo(map);
+            });
+        
+        $.getJSON("lib/asam.geojson",function(data){
+            var asamIcon = L.icon({
+                iconUrl: 'images/asam.png',
+                iconSize: [20,50],
+                popupAnchor:  [0, -30],
+                });
+            L.geoJson(data,{
+                pointToLayer: function(feature,latlng){
+                    var marker = L.marker(latlng,{icon: asamIcon});
+                    marker.bindPopup(feature.properties.title);
+                    return marker;
+                    }
+                }).addTo(map);
+            });
+        
+        $.getJSON("lib/asammsc.geojson",function(data){
+            var asammscIcon = L.icon({
+                iconUrl: 'images/asamimc.png',
+                iconSize: [20,50],
+                popupAnchor:  [0, -30],
+                });
+            L.geoJson(data,{
+                pointToLayer: function(feature,latlng){
+                    var marker = L.marker(latlng,{icon: asammscIcon});
+                    marker.bindPopup(feature.properties.title);
+                    return marker;
+                    }
+                }).addTo(map);
+            });
+        
+        $.getJSON("lib/hrdf.geojson",function(data){
+            var hrdfIcon = L.icon({
+                iconUrl: 'images/hrdf.png',
+                iconSize: [20,50],
+                popupAnchor:  [0, -30],
+                });
+            L.geoJson(data,{
+                pointToLayer: function(feature,latlng){
+                    var marker = L.marker(latlng,{icon: hrdfIcon});
+                    marker.bindPopup(feature.properties.title);
+                    return marker;
+                    }
+                }).addTo(map);
+            });
+        
+        var otherIcon = L.Icon.extend({
+			options: {
+				iconSize: [20,50],
+                popupAnchor:  [0, -30],
+			}
+		});
+
+        
+        var trcIcon = new otherIcon({iconUrl: 'images/trc.png'}),
+			multeciderIcon = new otherIcon({iconUrl: 'images/multecider.png'}),
+            asamcfsIcon = new otherIcon({iconUrl: 'images/asamcfs.png'}),
+            ibcIcon = new otherIcon({iconUrl: 'images/ibc.png'}),
+			stlIcon = new otherIcon({iconUrl: 'images/stl.png'});
+
+        
+        L.marker([40.933023, 29.12356], {icon: trcIcon}).addTo(map).bindPopup("TRC Istanbul");
+        L.marker([38.418118, 27.13198], {icon: multeciderIcon}).addTo(map).bindPopup("Multeci-Der Izmir");
+        L.marker([41.034254, 28.97657], {icon: asamcfsIcon}).addTo(map).bindPopup("ASAM CFS Istanbul");
+        L.marker([40.966321, 29.27290], {icon: ibcIcon}).addTo(map).bindPopup("IBC");
+        L.marker([41.021531, 28.77361], {icon: stlIcon}).addTo(map).bindPopup("STL");
+  
